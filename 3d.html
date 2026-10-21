@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>3D Mechanical — DC Shunt Motor Load Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="dash-page">
+  <!-- Header -->
+  <div class="dash-header">
+    <a href="index.html" class="back-btn">← Home</a>
+    <h1>🔩 3D Mechanical Simulation</h1>
+    <div class="param-pills" id="pills"></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="control-strip">
+    <div class="slider-group">
+      <label>🔧 Mechanical Load (Brake Tension)</label>
+      <div class="slider-row">
+        <span>0%</span>
+        <input type="range" id="load-slider" min="0" max="100" value="0" step="1"/>
+        <span>100%</span>
+      </div>
+    </div>
+    <div class="load-display" id="load-val">0%</div>
+    <div class="slider-group rheostat-slider">
+      <label>🎛️ Field Rheostat R<sub>h</sub> (Ω)</label>
+      <div class="slider-row">
+        <span>0</span>
+        <input type="range" id="rheostat-slider" min="0" max="200" value="0" step="1"/>
+        <span>200Ω</span>
+      </div>
+    </div>
+    <div class="load-display" id="rheostat-val">0Ω</div>
+  </div>
+
+  <!-- Gauges -->
+  <div class="gauges-strip">
+    <div class="gauge-card g-il"><span class="gauge-val" id="g-il">1.00</span><span class="gauge-label">Line Current I (A)</span></div>
+    <div class="gauge-card g-ia"><span class="gauge-val" id="g-ia">0.00</span><span class="gauge-label">Armature I<sub>a</sub> (A)</span></div>
+    <div class="gauge-card g-s1"><span class="gauge-val" id="g-s1">0.00</span><span class="gauge-label">S₁ (kg)</span></div>
+    <div class="gauge-card g-s2"><span class="gauge-val" id="g-s2">0.00</span><span class="gauge-label">S₂ (kg)</span></div>
+    <div class="gauge-card g-speed"><span class="gauge-val" id="g-speed">1500</span><span class="gauge-label">Speed N (RPM)</span></div>
+    <div class="gauge-card g-torque"><span class="gauge-val" id="g-torque">0.00</span><span class="gauge-label">Torque T (N·m)</span></div>
+    <div class="gauge-card g-pout"><span class="gauge-val" id="g-pout">0.0</span><span class="gauge-label">Output (W)</span></div>
+    <div class="gauge-card g-eff"><span class="gauge-val" id="g-eff">0.0</span><span class="gauge-label">Efficiency η (%)</span></div>
+  </div>
+
+  <!-- 3D Viewport -->
+  <div class="canvas-panel" id="three-container"></div>
+
+  <!-- Charts + Table row -->
+  <div class="charts-table-row">
+    <!-- Charts column -->
+    <div class="charts-column">
+      <div class="chart-panel chart-panel-multi">
+        <h3>Torque vs Speed</h3>
+        <div class="chart-wrap"><canvas id="chart-ts"></canvas></div>
+      </div>
+      <div class="chart-panel chart-panel-multi">
+        <h3>Output Power vs Efficiency</h3>
+        <div class="chart-wrap"><canvas id="chart-pe"></canvas></div>
+      </div>
+      <div class="chart-panel chart-panel-multi">
+        <h3>Load vs Speed & Current</h3>
+        <div class="chart-wrap"><canvas id="chart-lsc"></canvas></div>
+      </div>
+    </div>
+    <!-- Data Table -->
+    <div class="data-table-panel">
+      <h3>📊 Observation Table</h3>
+      <div class="table-scroll">
+        <table id="obs-table">
+          <thead>
+            <tr>
+              <th>Load%</th>
+              <th>S₁(kg)</th>
+              <th>S₂(kg)</th>
+              <th>T(N·m)</th>
+              <th>N(RPM)</th>
+              <th>I<sub>l</sub>(A)</th>
+              <th>P<sub>out</sub>(W)</th>
+              <th>η(%)</th>
+            </tr>
+          </thead>
+          <tbody id="obs-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<script src="sim.js"></script>
+<script src="motor3d.js"></script>
+</body>
+</html>

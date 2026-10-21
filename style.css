@@ -1,0 +1,137 @@
+/* ═══════════════════════════════════════════════════
+   DC Shunt Motor Load Test Simulator — Stylesheet
+   ═══════════════════════════════════════════════════ */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0d14;--surface:rgba(18,22,36,.55);--surface2:#151a2a;
+  --border:#1f2640;--accent:#4facfe;--accent2:#00f2fe;
+  --orange:#f5a623;--green:#34d399;--purple:#a78bfa;--red:#f87171;
+  --text:#e2e8f0;--text2:#94a3b8;--radius:14px;
+  --font:'Outfit',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ════ HOME PAGE ════ */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+.home-body{background:var(--bg)}
+.home-container{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:2rem 1.5rem 3rem}
+
+.hero{text-align:center;padding:3rem 0 2rem}
+.hero-icon-wrap{display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#4facfe22,#00f2fe18);margin-bottom:1rem;border:1px solid #4facfe33}
+.hero-icon{font-size:2.2rem;filter:drop-shadow(0 0 10px #4facfe88)}
+.hero-title{font-size:2.4rem;font-weight:800;line-height:1.15;margin-bottom:.6rem}
+.hero-highlight{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{color:var(--text2);font-size:.95rem;max-width:520px;margin:0 auto}
+
+/* Params Card */
+.params-card{background:var(--surface);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.8rem;margin-bottom:1.5rem}
+.params-title{font-size:1.1rem;font-weight:700;margin-bottom:.3rem}
+.params-desc{font-size:.8rem;color:var(--text2);margin-bottom:1rem}
+.params-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem}
+.param-field{display:flex;flex-direction:column;gap:.25rem}
+.param-field label{font-size:.75rem;font-weight:600;color:var(--text2)}
+.param-field input{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.5rem .7rem;color:var(--text);font-family:var(--mono);font-size:.85rem;outline:none;transition:border-color .2s}
+.param-field input:focus{border-color:var(--accent)}
+
+/* Dashboard Cards */
+.dash-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.5rem}
+.dash-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:2rem 1.5rem;background:var(--surface);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;color:var(--text);transition:transform .25s,border-color .3s,box-shadow .3s;cursor:pointer}
+.dash-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 8px 30px #4facfe18}
+.card-icon{font-size:2.5rem;margin-bottom:.8rem}
+.dash-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
+.dash-card p{font-size:.78rem;color:var(--text2);line-height:1.45;margin-bottom:.8rem}
+.card-cta{font-size:.82rem;font-weight:600;color:var(--accent);letter-spacing:.03em}
+
+/* Theory */
+.theory-card{background:var(--surface);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.8rem;margin-bottom:1.5rem}
+.theory-card h2{font-size:1.05rem;font-weight:700;margin-bottom:1rem}
+.formula-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.formula-item{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.7rem 1rem;display:flex;flex-direction:column;gap:.2rem}
+.formula-label{font-size:.7rem;font-weight:600;color:var(--accent2);text-transform:uppercase;letter-spacing:.06em}
+.formula-eq{font-family:var(--mono);font-size:.82rem;color:var(--text)}
+
+.home-footer{text-align:center;padding:1rem;font-size:.72rem;color:var(--text2);opacity:.6}
+
+/* ════ DASHBOARD PAGES (shared) ════ */
+.dash-header{display:flex;align-items:center;gap:.8rem;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--surface2)}
+.dash-header .back-btn{display:inline-flex;align-items:center;gap:.3rem;padding:.4rem .8rem;border-radius:8px;background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:.78rem;font-weight:600;text-decoration:none;transition:border-color .2s}
+.dash-header .back-btn:hover{border-color:var(--accent)}
+.dash-header h1{font-size:1.1rem;font-weight:700;flex:1}
+.dash-header .param-pills{display:flex;gap:.4rem;flex-wrap:wrap}
+.dash-header .pill{font-family:var(--mono);font-size:.68rem;padding:.2rem .55rem;border-radius:16px;background:var(--surface);border:1px solid var(--border);color:var(--accent2)}
+
+/* Control strip */
+.control-strip{display:flex;align-items:center;gap:1.2rem;padding:.8rem 1.5rem;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.slider-group{flex:1;min-width:200px;display:flex;flex-direction:column;gap:.3rem}
+.slider-group label{font-size:.78rem;font-weight:600;display:flex;align-items:center;gap:.3rem}
+.slider-row{display:flex;align-items:center;gap:.5rem}
+.slider-row span{font-family:var(--mono);font-size:.68rem;color:var(--text2);min-width:2rem;text-align:center}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:7px;border-radius:8px;background:var(--surface2);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 12px #4facfe44;border:2px solid #fff2;cursor:pointer}
+.rheostat-slider input[type=range]::-webkit-slider-thumb{background:linear-gradient(135deg,#a78bfa,#8b5cf6)}
+.load-display{font-family:var(--mono);font-size:1.4rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;min-width:4rem;text-align:center}
+
+/* Gauges strip */
+.gauges-strip{display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem;padding:.8rem 1.5rem;background:var(--surface);border-bottom:1px solid var(--border)}
+.gauge-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.6rem .8rem;display:flex;flex-direction:column;align-items:center;gap:.25rem;min-width:100px;flex:1;max-width:140px}
+.gauge-card .gauge-val{font-family:var(--mono);font-size:1.15rem;font-weight:700;color:#fff}
+.gauge-card .gauge-label{font-size:.62rem;color:var(--text2);text-align:center;font-weight:500}
+.gauge-card.g-il .gauge-val{color:var(--accent)}
+.gauge-card.g-ia .gauge-val{color:var(--orange)}
+.gauge-card.g-if .gauge-val{color:var(--green)}
+.gauge-card.g-speed .gauge-val{color:var(--green)}
+.gauge-card.g-torque .gauge-val{color:var(--orange)}
+.gauge-card.g-pout .gauge-val{color:var(--purple)}
+.gauge-card.g-eff .gauge-val{color:var(--accent2)}
+.gauge-card.g-s1 .gauge-val{color:var(--red)}
+.gauge-card.g-s2 .gauge-val{color:var(--accent)}
+
+/* Canvas panel */
+.canvas-panel{flex:1;position:relative;overflow:hidden;background:var(--bg);min-height:300px}
+.canvas-panel canvas{display:block;width:100%;height:100%}
+#three-container{width:100%;height:100%;position:relative}
+
+/* ════ Charts + Table Row ════ */
+.charts-table-row{display:flex;gap:0;border-top:1px solid var(--border);background:var(--surface)}
+.charts-column{flex:1;display:flex;flex-direction:column;min-width:0}
+
+/* Chart panels (multi) */
+.chart-panel{height:280px;background:var(--surface);border-top:1px solid var(--border);padding:.5rem 1rem;position:relative}
+.chart-panel h3{font-size:.78rem;font-weight:600;margin-bottom:.3rem;color:var(--text2)}
+.chart-wrap{position:relative;height:230px}
+
+.chart-panel-multi{height:220px;border-top:1px solid var(--border);padding:.4rem .8rem}
+.chart-panel-multi .chart-wrap{height:175px}
+
+/* Data Table Panel */
+.data-table-panel{width:340px;min-width:280px;max-width:400px;background:var(--surface2);border-left:1px solid var(--border);padding:.6rem .5rem;overflow:hidden;display:flex;flex-direction:column}
+.data-table-panel h3{font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.5rem;padding:0 .3rem}
+.table-scroll{flex:1;overflow-y:auto;overflow-x:auto}
+.table-scroll::-webkit-scrollbar{width:5px}
+.table-scroll::-webkit-scrollbar-track{background:var(--surface)}
+.table-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+#obs-table{width:100%;border-collapse:collapse;font-size:.72rem;font-family:var(--mono)}
+#obs-table thead{position:sticky;top:0;z-index:1}
+#obs-table th{background:var(--surface);color:var(--accent2);font-weight:600;padding:.4rem .3rem;border-bottom:2px solid var(--accent);text-align:center;white-space:nowrap;font-size:.65rem}
+#obs-table td{padding:.35rem .3rem;text-align:center;border-bottom:1px solid var(--border);color:var(--text);white-space:nowrap;transition:background .2s}
+#obs-table tr:hover td{background:rgba(79,172,254,.06)}
+#obs-table tr:nth-child(even) td{background:rgba(255,255,255,.015)}
+
+/* Dashboard layout */
+.dash-page{display:flex;flex-direction:column;min-height:100vh}
+
+/* Responsive */
+@media(max-width:900px){
+  .charts-table-row{flex-direction:column}
+  .data-table-panel{width:100%;max-width:100%;border-left:none;border-top:1px solid var(--border)}
+}
+@media(max-width:640px){
+  .dash-cards{grid-template-columns:1fr}
+  .formula-grid{grid-template-columns:1fr}
+  .hero-title{font-size:1.8rem}
+  .params-grid{grid-template-columns:1fr 1fr}
+  .control-strip{flex-direction:column;gap:.6rem}
+}

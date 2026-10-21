@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DC Shunt Motor — Load Test Simulator</title>
+  <meta name="description" content="Interactive 2D & 3D simulator for DC Shunt Motor brake load test experiment."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="home-body">
+
+  <!-- Animated background particles -->
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="home-container">
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero-icon-wrap"><span class="hero-icon">⚡</span></div>
+      <h1 class="hero-title">DC Shunt Motor<br/><span class="hero-highlight">Load Test Simulator</span></h1>
+      <p class="hero-sub">Interactive 2D Circuit &amp; 3D Mechanical Visualization of the Brake Test Experiment</p>
+    </header>
+
+    <!-- Parameter Inputs -->
+    <section class="params-card" id="params-card">
+      <h2 class="params-title">⚙️ Experiment Parameters</h2>
+      <p class="params-desc">Configure motor & test rig parameters before launching a dashboard.</p>
+      <div class="params-grid">
+        <div class="param-field">
+          <label for="p-vs">Supply Voltage (V)</label>
+          <input type="number" id="p-vs" value="220" min="10" max="500" step="1"/>
+        </div>
+        <div class="param-field">
+          <label for="p-ra">Armature Resistance R<sub>a</sub> (Ω)</label>
+          <input type="number" id="p-ra" value="0.5" min="0.01" max="50" step="0.01"/>
+        </div>
+        <div class="param-field">
+          <label for="p-rf">Field Resistance R<sub>f</sub> (Ω)</label>
+          <input type="number" id="p-rf" value="220" min="1" max="1000" step="1"/>
+        </div>
+        <div class="param-field">
+          <label for="p-n0">No-Load Speed N<sub>0</sub> (RPM)</label>
+          <input type="number" id="p-n0" value="1500" min="100" max="5000" step="10"/>
+        </div>
+        <div class="param-field">
+          <label for="p-r">Brake Drum Radius R (m)</label>
+          <input type="number" id="p-r" value="0.1" min="0.01" max="1" step="0.005"/>
+        </div>
+        <div class="param-field">
+          <label for="p-fuse">Fuse Rating (A)</label>
+          <input type="number" id="p-fuse" value="15" min="1" max="100" step="1"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Cards -->
+    <section class="dash-cards">
+      <a href="#" class="dash-card card-2d" id="btn-2d" onclick="launch('2d')">
+        <div class="card-icon">📐</div>
+        <h3>2D Circuit Simulation</h3>
+        <p>Animated schematic with current flow particles, ammeters, voltmeters, DPST switch, 3-point starter &amp; field rheostat.</p>
+        <span class="card-cta">Launch →</span>
+      </a>
+      <a href="#" class="dash-card card-3d" id="btn-3d" onclick="launch('3d')">
+        <div class="card-icon">🔩</div>
+        <h3>3D Mechanical Simulation</h3>
+        <p>Interactive 3D brake drum assembly with rotating shaft, spring balances, tightening belt &amp; speed response.</p>
+        <span class="card-cta">Launch →</span>
+      </a>
+    </section>
+
+    <!-- Theory -->
+    <section class="theory-card">
+      <h2>📘 Theory &amp; Formulae</h2>
+      <div class="formula-grid">
+        <div class="formula-item">
+          <span class="formula-label">Input Power</span>
+          <span class="formula-eq">P<sub>in</sub> = V × I &nbsp; (Watts)</span>
+        </div>
+        <div class="formula-item">
+          <span class="formula-label">Torque</span>
+          <span class="formula-eq">T = 9.81 × (S<sub>1</sub> − S<sub>2</sub>) × R &nbsp; (N·m)</span>
+        </div>
+        <div class="formula-item">
+          <span class="formula-label">Output Power</span>
+          <span class="formula-eq">P<sub>out</sub> = 2πNT / 60 &nbsp; (Watts)</span>
+        </div>
+        <div class="formula-item">
+          <span class="formula-label">Efficiency</span>
+          <span class="formula-eq">η = (P<sub>out</sub> / P<sub>in</sub>) × 100 &nbsp; (%)</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="home-footer">
+      <p>DC Shunt Motor Load Test — Electrical Engineering Lab Simulator</p>
+    </footer>
+  </div>
+
+  <script>
+    function launch(page){
+      // Save params to sessionStorage
+      const params={
+        Vs:+document.getElementById('p-vs').value,
+        Ra:+document.getElementById('p-ra').value,
+        Rf:+document.getElementById('p-rf').value,
+        N0:+document.getElementById('p-n0').value,
+        R:+document.getElementById('p-r').value,
+        Fuse:+document.getElementById('p-fuse').value
+      };
+      sessionStorage.setItem('motorParams',JSON.stringify(params));
+      window.location.href=page+'.html';
+    }
+
+    // Background particle animation
+    (function(){
+      const c=document.getElementById('bg-canvas'),ctx=c.getContext('2d');
+      let w,h;
+      function resize(){w=c.width=innerWidth;h=c.height=innerHeight;}
+      resize();window.addEventListener('resize',resize);
+      const dots=Array.from({length:60},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*2+1}));
+      function draw(){
+        ctx.clearRect(0,0,w,h);
+        dots.forEach(d=>{
+          d.x+=d.vx;d.y+=d.vy;
+          if(d.x<0||d.x>w)d.vx*=-1;
+          if(d.y<0||d.y>h)d.vy*=-1;
+          ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+          ctx.fillStyle='rgba(79,172,254,0.25)';ctx.fill();
+        });
+        dots.forEach((a,i)=>{
+          for(let j=i+1;j<dots.length;j++){
+            const b=dots[j],dx=a.x-b.x,dy=a.y-b.y,dist=Math.sqrt(dx*dx+dy*dy);
+            if(dist<150){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(79,172,254,${.08*(1-dist/150)})`;ctx.stroke();}
+          }
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
+</body>
+</html>
